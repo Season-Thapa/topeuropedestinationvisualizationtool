@@ -1,0 +1,19 @@
+main {
+    display: inline-grid;
+    grid-template-columns: repeat(2, 40dvw);
+    grid-template-rows: repeat(3, 30dvw);
+    margin: 2rem 8dvw;
+    gap: 2dvw;
+}
+
+.container {
+    display: flex;
+    max-height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.map {
+    height: 100%;
+    aspect-ratio: 4 / 3;
+}
