@@ -11,3 +11,13 @@ export function getDestinationsPerCountry() {
 
 	return result;
 }
+export function getDestinationsByLivingCost(){
+	const result = {};
+
+	tourDestinations.forEach(dest => {
+		const livingCost = dest["Cost of Living"]?.toLowerCase();
+		result[livingCost] = (result[livingCost] || 0) + 1;
+	});
+
+	return result;
+}
