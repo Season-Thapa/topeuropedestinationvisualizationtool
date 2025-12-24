@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Data API</title>
+  <link rel="stylesheet" href="./css/add-data.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin></script>
+  <script type="module" src="../assets/js/add-data.js"></script>
+</head>
+<body>
+<main>
+  <h1>Add a New Destination</h1>
+  <form id="destination-form">
+    <label for="destination">Destination Name</label>
+    <input type="text" id="destination" name="destination" required>
+
+    <label for="country">Country</label>
+    <input type="text" id="country" name="country" required>
+
+    <label for="region">Region</label>
+    <input type="text" id="region" name="region">
+
+    <label for="category">Category</label>
+    <select id="category" name="category">
+      <option value="City">City</option>
+      <option value="Nature">Nature</option>
+      <option value="Historic">Historic</option>
+      <option value="Beach">Beach</option>
+    </select>
+
+    <label for="tourists">Approx. Annual Tourists</label>
+    <input type="text" id="tourists" name="tourists">
+
+    <label for="currency">Currency</label>
+    <input type="text" id="currency" name="currency">
+
+    <label for="cost">Cost of Living</label>
+    <select id="cost" name="cost">
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="Medium-High">Medium-High</option>
+      <option value="High">High</option>
+    </select>
+
+    <button type="submit">Add Destination</button>
+  </form>
+
+  <p id="success-msg" class="success-message"></p>
+</main>
+</body>
+</html>
