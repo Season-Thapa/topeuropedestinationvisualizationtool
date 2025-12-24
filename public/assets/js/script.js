@@ -2,6 +2,7 @@ import * as DataFetcher from './datafetcher.js';
 function  init(){
 	barChart();
 	doughnutchart();
+	destinationsMap();
 }
 function barChart(){
 	const ctx = document.querySelector("#bar-chart").getContext("2d");
@@ -51,6 +52,26 @@ function doughnutchart() {
 		},
 	};
 	new Chart(ctx, configuration);
+}
+function getMarker(coordinate, destinationIcon = true) {
+	const icon = L.icon({
+		iconUrl: "images/marker.png",
+		iconSize: [20, 30],
+		iconAnchor: [10, 30],
+	});
+	return destinationIcon ? L.marker(coordinate, { icon }) : L.marker(coordinate);
+}
+function destinationsMap() {
+	const coordinates = DataFetcher.getCenterLatLong();
+	const map = L.map("destinations-map").setView([50.85045, 4.34878], 10);
+	L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	}).addTo(map);
+	const markers = coordinates.map((coordinate) => getMarker(coordinate));
+	const markersGroup = L.featureGroup(markers).addTo(map);
+
+	const bounds = markersGroup.getBounds();
+	map.fitBounds(bounds);
 }
 init();
 
