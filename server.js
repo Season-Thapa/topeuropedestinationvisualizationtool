@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import {getDestinationsCountsByLivingCost, getDestinationsCountsPerCountry} from "./models/dataFetcher.js";
+import {
+  getAllCoordinates,
+  getDestinationsCountsByLivingCost,
+  getDestinationsCountsPerCountry
+} from "./models/dataFetcher.js";
 import 'dotenv/config';
 
 const PORT = process.env.PORT || 3000;
@@ -21,7 +25,11 @@ app.get("/destinations/byLivingCost", async (req, res,next) => {
       .then(results => res.json(results))
       .catch(err => next(err));
 });
-
+app.get("/destinations/coordinates", async (req, res, next) => {
+  await getAllCoordinates()
+  .then(results => res.json(results))
+  .catch(err => next(err));
+});
 // POST Route (REQUIRED FOR ASSIGNMENT)
 app.post("/api/destinations", async (req, res) => {
   const newEntry = req.body;

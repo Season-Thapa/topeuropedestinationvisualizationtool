@@ -7,10 +7,14 @@ const getDestinationPerCountryQuery = "SELECT country, COUNT(*) as total \n" +
 const getDestinationsByLivingCost = "SELECT cost_of_living, COUNT(*) as total \n" +
 	"FROM destinations \n" +
 	"GROUP BY cost_of_living";
+const destinationsMapQuery = "SELECT destination, latitude, longitude FROM destinations WHERE latitude IS NOT NULL";
 async function getDestinationsCountsPerCountry(){
 	return  await executeWithResult(getDestinationPerCountryQuery);
 }
 async function getDestinationsCountsByLivingCost(){
 	return  await executeWithResult(getDestinationsByLivingCost);
 }
-export {getDestinationsCountsPerCountry, getDestinationsCountsByLivingCost};
+async function getAllCoordinates(){
+	return await executeWithResult(destinationsMapQuery);
+}
+export {getDestinationsCountsPerCountry, getDestinationsCountsByLivingCost,getAllCoordinates};

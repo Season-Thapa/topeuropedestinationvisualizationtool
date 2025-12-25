@@ -10,7 +10,6 @@ async function barChart(){
 	const ctx = document.querySelector("#bar-chart").getContext("2d");
 	const data = await fetch(`${BASEURL}/destinations/bycountry`).then(res => res.json());
 	const labels = data.map(item => item.country);
-
 	const values = data.map(item => item.total);
 		const configuration = {
 			type: "bar",
@@ -58,25 +57,44 @@ async function doughnutchart() {
 	};
 	new Chart(ctx, configuration);
 }
-function getMarker(coordinate, destinationIcon = true) {
+function getMarker(lat,long,title) {
 	const icon = L.icon({
 		iconUrl: "images/marker.png",
 		iconSize: [20, 30],
 		iconAnchor: [10, 30],
+		popupAnchor: [0, -30]
 	});
-	return destinationIcon ? L.marker(coordinate, { icon }) : L.marker(coordinate);
+
+	const marker = L.marker([lat, long], { icon: icon });
+	marker.bindPopup(`<b>${title}</b>`);
+
+	return marker;
 }
-function destinationsMap() {
-	const coordinates = DataFetcher.getCenterLatLong();
-	const map = L.map("destinations-map").setView([50.85045, 4.34878], 10);
+async function destinationsMap() {
+	const map = L.map("destinations-map").setView([50.85045, 4.34878], 4);
+
 	L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 	}).addTo(map);
-	const markers = coordinates.map((coordinate) => getMarker(coordinate));
-	const markersGroup = L.featureGroup(markers).addTo(map);
 
-	const bounds = markersGroup.getBounds();
-	map.fitBounds(bounds);
+	try {
+		const response = await fetch(`${BASEURL}/destinations/coordinates`);
+		const locations = await response.json();
+
+		const markers = locations.map(loc => {
+			if (loc.latitude && loc.longitude) {
+				return getMarker(loc.latitude, loc.longitude, loc.destination);
+			}
+		}).filter(marker => marker !== undefined);
+
+		if (markers.length > 0) {
+			const markersGroup = L.featureGroup(markers).addTo(map);
+			map.fitBounds(markersGroup.getBounds(), { padding: [50, 50] });
+		}
+
+	} catch (error) {
+		console.error("Error loading map locations:", error);
+	}
 }
 init();
 
