@@ -87,9 +87,10 @@ async function destinationsMap() {
 			}
 		}).filter(marker => marker !== undefined);
 
+		// 4. Add to Map & Fit Bounds
 		if (markers.length > 0) {
 			const markersGroup = L.featureGroup(markers).addTo(map);
-			map.fitBounds(markersGroup.getBounds(), { padding: [50, 50] });
+			map.fitBounds(markersGroup.getBounds());
 		}
 
 	} catch (error) {

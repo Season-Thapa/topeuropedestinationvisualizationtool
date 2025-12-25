@@ -10,7 +10,6 @@ async function handleFormSubmit(e) {
 	e.preventDefault();
 	showMessage("Saving...", "normal");
 
-	// 1. Gather Data from all input fields
 	const destinationData = {
 		Destination: getValue('destination'),
 		Country: getValue('country'),
@@ -26,12 +25,10 @@ async function handleFormSubmit(e) {
 		Safety: getValue('safety'),
 		"Cultural Significance": getValue('cultural'),
 		Description: getValue('description'),
-		// Init coordinates as null
 		Latitude: null,
 		Longitude: null
 	};
 
-	// 2. Handle Geolocation Logic
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
