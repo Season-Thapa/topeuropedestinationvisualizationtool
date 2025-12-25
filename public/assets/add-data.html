@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Data API</title>
+  <link rel="stylesheet" href="./css/add-data.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin></script>
+  <script type="module" src="../assets/js/add-data.js"></script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Add New Destination</h1>
+    <p>Fill in the details to add a location to the database.</p>
+  </header>
+
+  <form id="destination-form">
+    <!-- Group 1: Basic Info -->
+    <div class="form-group">
+      <label for="destination">Destination Name *</label>
+      <input type="text" id="destination" required placeholder="e.g. Rome">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="country">Country *</label>
+        <input type="text" id="country" required placeholder="e.g. Italy">
+      </div>
+      <div class="form-group">
+        <label for="region">Region</label>
+        <input type="text" id="region" placeholder="e.g. Lazio">
+      </div>
+    </div>
+
+    <!-- Group 2: Categories & Stats -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category">
+          <option value="City">City</option>
+          <option value="Nature">Nature</option>
+          <option value="Historic">Historic</option>
+          <option value="Beach">Beach</option>
+          <option value="Mountain">Mountain</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="tourists">Annual Tourists</label>
+        <input type="text" id="tourists" placeholder="e.g. 14 million">
+      </div>
+    </div>
+
+    <!-- Group 3: Travel Details -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="currency">Currency</label>
+        <input type="text" id="currency" placeholder="e.g. Euro">
+      </div>
+      <div class="form-group">
+        <label for="cost">Cost of Living</label>
+        <select id="cost">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="Medium-high">Medium-High</option>
+          <option value="High">High</option>
+          <option value="Extremely high">Extremely High</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="language">Language</label>
+        <input type="text" id="language" placeholder="e.g. Italian">
+      </div>
+      <div class="form-group">
+        <label for="bestTime">Best Time to Visit</label>
+        <input type="text" id="bestTime" placeholder="e.g. Spring">
+      </div>
+    </div>
+
+    <!-- Group 4: Culture -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="religion">Majority Religion</label>
+        <input type="text" id="religion" placeholder="e.g. Catholic">
+      </div>
+      <div class="form-group">
+        <label for="safety">Safety Level</label>
+        <input type="text" id="safety" placeholder="e.g. Safe">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="food">Famous Foods</label>
+      <input type="text" id="food" placeholder="e.g. Pizza, Pasta">
+    </div>
+
+    <!-- Group 5: Descriptions -->
+    <div class="form-group">
+      <label for="cultural">Cultural Significance</label>
+      <textarea id="cultural" rows="2" placeholder="Historical importance..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" rows="3" placeholder="General description..."></textarea>
+    </div>
+
+    <button type="submit" id="submit-btn">Add Destination</button>
+  </form>
+
+  <div id="message-box" class="message-box hidden"></div>
+</div>
+</body>
+</html>
