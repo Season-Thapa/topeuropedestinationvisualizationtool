@@ -1,14 +1,17 @@
 import * as DataFetcher from './datafetcher.js';
+const BASEURL = 'http://localhost:3000';
+
 function  init(){
 	barChart();
 	doughnutchart();
 	destinationsMap();
 }
-function barChart(){
+async function barChart(){
 	const ctx = document.querySelector("#bar-chart").getContext("2d");
-	const data = DataFetcher.getDestinationsPerCountry();
-	const labels = Object.keys(data);
-	const values = Object.values(data);
+	const data = await fetch(`${BASEURL}/destinations/bycountry`).then(res => res.json());
+	const labels = data.map(item => item.country);
+
+	const values = data.map(item => item.total);
 		const configuration = {
 			type: "bar",
 			data: {

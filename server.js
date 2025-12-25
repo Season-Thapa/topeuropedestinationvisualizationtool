@@ -1,19 +1,20 @@
 import express from 'express';
 import cors from 'cors';
-import { database } from './models/database.js';
+import {getDestinationsCountsPerCountry} from "./models/dataFetcher.js";
 import 'dotenv/config';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-app.use(cors());
 
+app.use(cors());
 app.use("/", express.static('public'));
 app.use(express.json());
 
 // GET Route
-app.get("/api/destinations", async (req, res) => {
-  const data = await database.getAll();
-  res.json(data);
+app.get("/destinations/bycountry", async (req, res,next) => {
+  await getDestinationsCountsPerCountry()
+      .then(results => res.json(results))
+      .catch(err => next(err));
 });
 
 // POST Route (REQUIRED FOR ASSIGNMENT)
