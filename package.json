@@ -1,7 +1,8 @@
 {
-  "name": "demo",
+  "name": "europeantourdestinationsvisualization",
   "version": "0.0.0",
   "private": "true",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "test": "mocha --exit tests/*",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "chart.js": "^4.5.1",
-    "express": "^4.18.2"
+    "cors": "^2.8.5",
+    "express": "^4.22.1"
   }
 }
