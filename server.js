@@ -7,6 +7,7 @@ import {
 } from "./models/dataFetcher.js";
 import {InsertData} from "./models/add-data.js";
 import 'dotenv/config';
+import { WebSocketServer } from 'ws';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -34,12 +35,29 @@ app.get("/destinations/coordinates", async (req, res, next) => {
 app.post("/destination", async (req, res,next) => {
   const newDestination  = req.body;
   InsertData.create(newDestination)
-      .then(() => res.status(201).send())
+      .then(() =>{
+        broadcastUpdate();
+      res.status(201).send()
+      })
       .catch(err => next(err));
 });
 
-app.listen(PORT, () => {
+const server= app.listen(PORT, () => {
   console.log("Listening on " + PORT);
 });
+const wss = new WebSocketServer({ server });
 
+wss.on('connection', (ws) => {
+  console.log('Client connected to WebSocket');
+  ws.on('error', console.error);
+});
+
+// Helper function to tell everyone: "Data Changed!"
+export function broadcastUpdate() {
+  wss.clients.forEach(client => {
+    if (client.readyState === client.OPEN) {
+      client.send(JSON.stringify({ type: 'UPDATE' }));
+    }
+  });
+}
 export default app;

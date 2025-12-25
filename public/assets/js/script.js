@@ -1,10 +1,30 @@
-import * as DataFetcher from './datafetcher.js';
 const BASEURL = 'http://localhost:3000';
-
+let myBarChart = null;
+let myDoughnutChart = null;
+let myMap = null;
+let markerGroup = null
 function  init(){
+	loadAllCharts();
+	setupRealtimeListener();
+}
+function loadAllCharts() {
 	barChart();
 	doughnutchart();
 	destinationsMap();
+}
+function setupRealtimeListener() {
+	const socket = new WebSocket('ws://localhost:3000');
+	socket.onopen = () => {
+		console.log("Connected to Real-Time Server");
+	};
+
+	socket.onmessage = (event) => {
+		const msg = JSON.parse(event.data);
+		if (msg.type === 'UPDATE') {
+			console.log("New data received! Updating charts...");
+			loadAllCharts();
+		}
+	};
 }
 async function barChart(){
 	const ctx = document.querySelector("#bar-chart").getContext("2d");
@@ -24,7 +44,8 @@ async function barChart(){
 				],
 			},
 		};
-		new Chart(ctx, configuration);
+	if (myBarChart) myBarChart.destroy();
+	myBarChart = new Chart(ctx, configuration);
 	}
 async function doughnutchart() {
 	const ctx = document.querySelector("#doughnut-chart").getContext("2d");
@@ -55,7 +76,8 @@ async function doughnutchart() {
 			},
 		},
 	};
-	new Chart(ctx, configuration);
+	if (myDoughnutChart) myDoughnutChart.destroy();
+	myDoughnutChart = new Chart(ctx, configuration);
 }
 function getMarker(lat,long,title) {
 	const icon = L.icon({
@@ -71,26 +93,27 @@ function getMarker(lat,long,title) {
 	return marker;
 }
 async function destinationsMap() {
-	const map = L.map("destinations-map").setView([50.85045, 4.34878], 4);
+	if (!myMap) {
+		myMap = L.map("destinations-map").setView([50.85045, 4.34878], 4);
 
-	L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	}).addTo(map);
-
+		L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		}).addTo(myMap);
+		markerGroup = L.featureGroup().addTo(myMap);
+	}
 	try {
 		const response = await fetch(`${BASEURL}/destinations/coordinates`);
 		const locations = await response.json();
-
+		markerGroup.clearLayers();
 		const markers = locations.map(loc => {
 			if (loc.latitude && loc.longitude) {
 				return getMarker(loc.latitude, loc.longitude, loc.destination);
 			}
 		}).filter(marker => marker !== undefined);
 
-		// 4. Add to Map & Fit Bounds
 		if (markers.length > 0) {
-			const markersGroup = L.featureGroup(markers).addTo(map);
-			map.fitBounds(markersGroup.getBounds());
+			const markersGroup = L.featureGroup(markers).addTo(myMap);
+			myMap.fitBounds(markersGroup.getBounds());
 		}
 
 	} catch (error) {
