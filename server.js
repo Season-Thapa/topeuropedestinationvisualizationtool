@@ -1,27 +1,28 @@
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { database } from './models/database.js';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const PORT = 3001;
+import 'dotenv/config';
+
+const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use("/", express.static('public'));
 app.use(express.json());
 
-
-app.get("/", (req, res) => {
-  return res.status(200).send({
-    message: "Hello World!",
-  });
-});
-app.get("/api/destinations", (req, res) => {
-  const data = database.getAll();
+// GET Route
+app.get("/api/destinations", async (req, res) => {
+  const data = await database.getAll();
   res.json(data);
 });
+
+// POST Route (REQUIRED FOR ASSIGNMENT)
+app.post("/api/destinations", async (req, res) => {
+  const newEntry = req.body;
+  const savedEntry = await database.save(newEntry);
+  res.status(201).json(savedEntry);
+});
+
 app.listen(PORT, () => {
   console.log("Listening on " + PORT);
 });
