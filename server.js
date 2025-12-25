@@ -5,6 +5,7 @@ import {
   getDestinationsCountsByLivingCost,
   getDestinationsCountsPerCountry
 } from "./models/dataFetcher.js";
+import {InsertData} from "./models/add-data.js";
 import 'dotenv/config';
 
 const PORT = process.env.PORT || 3000;
@@ -30,11 +31,11 @@ app.get("/destinations/coordinates", async (req, res, next) => {
   .then(results => res.json(results))
   .catch(err => next(err));
 });
-// POST Route (REQUIRED FOR ASSIGNMENT)
-app.post("/api/destinations", async (req, res) => {
-  const newEntry = req.body;
-  const savedEntry = await database.save(newEntry);
-  res.status(201).json(savedEntry);
+app.post("/destination", async (req, res,next) => {
+  const newDestination  = req.body;
+  InsertData.create(newDestination)
+      .then(() => res.status(201).send())
+      .catch(err => next(err));
 });
 
 app.listen(PORT, () => {
