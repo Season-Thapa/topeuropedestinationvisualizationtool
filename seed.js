@@ -29,18 +29,26 @@ async function seed() {
 		console.log("🔨 Creating new table...");
 		await connection.execute(`
             CREATE TABLE destinations (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                destination VARCHAR(255),
-                region VARCHAR(255),
-                country VARCHAR(255),
-                category VARCHAR(255),
-                latitude DOUBLE,
-                longitude DOUBLE,
-                annual_tourists VARCHAR(255), 
-                currency VARCHAR(255),
-                description TEXT
+                                          id INT AUTO_INCREMENT PRIMARY KEY,
+                                          destination VARCHAR(255),
+                                          region VARCHAR(255),
+                                          country VARCHAR(255),
+                                          category VARCHAR(255),
+                                          latitude DOUBLE,
+                                          longitude DOUBLE,
+                                          annual_tourists VARCHAR(255),
+                                          currency VARCHAR(255),
+                                          majority_religion VARCHAR(255),
+                                          famous_foods VARCHAR(255),
+                                          language VARCHAR(255),
+                                          best_time_to_visit VARCHAR(255),
+                                          cost_of_living VARCHAR(255),
+                                          safety VARCHAR(255),
+                                          cultural_significance TEXT,
+                                          description TEXT
             )
-        `);
+		`);
+
 
 		console.log("📖 Reading JSON...");
 		const dataPath = path.join(__dirname, 'data/euopedestination.json');
@@ -54,12 +62,12 @@ async function seed() {
 		console.log(`🌱 Inserting ${jsonData.length} items...`);
 
 		for (const item of jsonData) {
-			// Map JSON keys to SQL columns
-			// We use item["Key Name"] because some keys have spaces
 			await connection.execute(
-				`INSERT INTO destinations 
-                (destination, region, country, category, latitude, longitude, annual_tourists, currency, description) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+				`INSERT INTO destinations
+                 (destination, region, country, category, latitude, longitude, annual_tourists, currency,
+                  majority_religion, famous_foods, language, best_time_to_visit, cost_of_living, safety,
+                  cultural_significance, description)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 				[
 					item.Destination,
 					item.Region,
@@ -67,8 +75,15 @@ async function seed() {
 					item.Category,
 					item.Latitude,
 					item.Longitude,
-					item["Approximate Annual Tourists"], // Kept as String ("14 million")
+					item["Approximate Annual Tourists"],
 					item.Currency,
+					item["Majority Religion"],
+					item["Famous Foods"],
+					item.Language,
+					item["Best Time to Visit"],
+					item["Cost of Living"],
+					item.Safety,
+					item["Cultural Significance"],
 					item.Description
 				]
 			);

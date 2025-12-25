@@ -1,12 +1,16 @@
 import {executeWithResult,executeWithoutResult} from "./database.js";
 import {UnexistingResourceError} from "../logic/exceptions/errorhandling.js";
-import {getDestinationsPerCountry} from "../public/assets/js/datafetcher.js";
 
 const getDestinationPerCountryQuery = "SELECT country, COUNT(*) as total \n" +
 	"FROM destinations \n" +
-	"GROUP BY country;";
+	"GROUP BY country";
+const getDestinationsByLivingCost = "SELECT cost_of_living, COUNT(*) as total \n" +
+	"FROM destinations \n" +
+	"GROUP BY cost_of_living";
 async function getDestinationsCountsPerCountry(){
-	const result = await executeWithResult(getDestinationPerCountryQuery);
-	return result;
+	return  await executeWithResult(getDestinationPerCountryQuery);
 }
-export {getDestinationsCountsPerCountry};
+async function getDestinationsCountsByLivingCost(){
+	return  await executeWithResult(getDestinationsByLivingCost);
+}
+export {getDestinationsCountsPerCountry, getDestinationsCountsByLivingCost};

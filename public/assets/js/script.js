@@ -27,17 +27,19 @@ async function barChart(){
 		};
 		new Chart(ctx, configuration);
 	}
-function doughnutchart() {
+async function doughnutchart() {
 	const ctx = document.querySelector("#doughnut-chart").getContext("2d");
-	const data = DataFetcher.getDestinationsByLivingCost();
+	const data = await fetch(`${BASEURL}/destinations/byLivingCost`).then(res => res.json());
 
+	const labels = data.map(item => item.cost_of_living);
+	const values = data.map(item => item.total);
 	const configuration = {
 		type: "doughnut",
 		data: {
-			labels: Object.keys(data),
+			labels,
 			datasets: [
 				{
-					data: Object.values(data),
+					data:values,
 					backgroundColor: ["#FF5722", "#FF9800", "#9C27B0", "#4CAF50","gray","beige"],
 				},
 			],
