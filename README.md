@@ -1,12 +1,24 @@
-1. Setup Project
 
+# Europe Tour Destinations Visualization
+
+A web application to visualize European travel destinations using interactive charts and maps with real-time updates.
+
+## 📋 Prerequisites
+*   **Docker Desktop** (Must be running)
+*   **Git**
+
+## 🚀 How to Run
+
+### 1. Clone the Repository
+```bash
 git clone git@gitlab.ti.howest.be:ti/2025-2026/s3/web-technology/students/season-thapa/europeantourdestinationsvisualization.git
 cd europeantourdestinationsvisualization
-npm install
 
 2. Configure Environment
 
-Create a .env file in the root folder and add this:
+Create a file named .env in the root folder and paste the following configuration:
+code Ini
+  
 DB_ROOT_PASSWORD=your_root_password
 DB_HOST=127.0.0.1
 DB_USER=user
@@ -16,22 +28,20 @@ DB_PORT=3306
 APP_PORT=3000
 PORT=3000
 
-3. Start Database (Docker)
+3. Start the Application
 
-   Start only the database container to keep port 3000 free for your local server.
-   docker-compose up db -d
+Run this command to build the server and start the database containers:
+code Bash    
+docker-compose up --build  
 
-4. Seed Database
+4. Seed the Database
 
-Run the seed script locally to fill the database.
-node seed.js
+Open a new terminal window (keep the previous one running) and execute this command to fill the database with initial data:
+code Bash
+docker-compose exec app node seed.js
 
-5. Run Server
+You should see: ✅ Done! Database seeded...
 
-Start the application.
-node server.js
-
-6. Access Application
-
+🌐 Usage
    Visualization Dashboard: http://localhost:63342/europeantourdestinationsvisualization/public/assets/index.html
    Add New Data: http://localhost:63342/europeantourdestinationsvisualization/public/assets/add-data.html
