@@ -62,6 +62,12 @@ async function sendDataToServer(data) {
 		if (response.ok) {
 			showMessage(`Success! "${data.Destination}" added to database.`, "success");
 			form.reset();
+			// 2. Wait 1.5 seconds, then redirect to index.html
+			setTimeout(() => {
+				window.location.href = 'index.html';
+				// OR use '/' if index.html is your home page:
+				// window.location.href = '/';
+			}, 1500);
 		} else {
 			const err = await response.json();
 			showMessage(`Error: ${err.message || "Failed to save"}`, "error");
