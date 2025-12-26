@@ -6,13 +6,6 @@ class CustomError extends Error {
         this.message = message;
     }
 }
-
-class UnexistingResourceError extends CustomError {
-
-    constructor(message) {
-        super(404, message);
-    }
-}
 class BodyParsingError extends CustomError {
 
     constructor(message) {
@@ -20,4 +13,4 @@ class BodyParsingError extends CustomError {
     }
 }
 
-export { CustomError, UnexistingResourceError,BodyParsingError }
+export { CustomError, BodyParsingError }

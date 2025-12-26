@@ -9,8 +9,8 @@ const INSERT_DESTINATION_QUERY = `
     )
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `;
-export const InsertData = {
-create : async (data) =>{
+
+async function create(data){
 	if (data === undefined)
 		throw new BodyParsingError("Body cannot be empty");
 	const params = [
@@ -33,5 +33,6 @@ create : async (data) =>{
 	];
 
 	await executeWithoutResult(INSERT_DESTINATION_QUERY, ...params);
+
 }
-}
+export {create};

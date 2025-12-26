@@ -1,5 +1,4 @@
-import {executeWithResult,executeWithoutResult} from "./database.js";
-import {UnexistingResourceError} from "../logic/exceptions/errorhandling.js";
+import {executeWithResult} from "./database.js";
 
 const getDestinationPerCountryQuery = "SELECT country, COUNT(*) as total \n" +
 	"FROM destinations \n" +

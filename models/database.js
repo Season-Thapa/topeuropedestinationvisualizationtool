@@ -22,7 +22,7 @@ async function executeWithResult(query, ...params) {
 		const [rows] = await conn.query(query, params);
 		return convertToJsonObject(rows);
 	} finally {
-		await conn.end(); // IMPORTANT: Close connection even if error occurs
+		await conn.end();
 	}
 }
 

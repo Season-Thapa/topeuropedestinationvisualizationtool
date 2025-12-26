@@ -62,11 +62,8 @@ async function sendDataToServer(data) {
 		if (response.ok) {
 			showMessage(`Success! "${data.Destination}" added to database.`, "success");
 			form.reset();
-			// 2. Wait 1.5 seconds, then redirect to index.html
 			setTimeout(() => {
 				window.location.href = 'index.html';
-				// OR use '/' if index.html is your home page:
-				// window.location.href = '/';
 			}, 1500);
 		} else {
 			const err = await response.json();
@@ -78,13 +75,11 @@ async function sendDataToServer(data) {
 	}
 }
 
-// Helper to get value by ID cleanly
 function getValue(id) {
 	const el = document.getElementById(id);
 	return el ? el.value : "";
 }
 
-// Helper to show UI messages
 function showMessage(text, type) {
 	msgBox.textContent = text;
 	msgBox.classList.remove('hidden', 'success', 'error');
@@ -93,5 +88,4 @@ function showMessage(text, type) {
 	if (type === 'error') msgBox.classList.add('error');
 }
 
-// Start
 init();
