@@ -24,7 +24,7 @@ services:
       DB_HOST: db
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: ${DB_DATABASE}  <-- CHANGED FROM DB_NAME
+      DB_DATABASE: ${DB_DATABASE}
       PORT: 3000
 
 volumes:
