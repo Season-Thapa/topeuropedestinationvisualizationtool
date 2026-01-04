@@ -41,7 +41,6 @@ code Bash
 docker-compose exec app node seed.js
 
 You should see: ✅ Done! Database seeded...
-
 🌐 Usage
-   Visualization Dashboard: http://localhost:63342/europeantourdestinationsvisualization/public/assets/index.html
-   Add New Data: http://localhost:63342/europeantourdestinationsvisualization/public/assets/add-data.html
+   Visualization Dashboard: http://localhost:3000
+   Add New Data: http://localhost:3000/add-data.html

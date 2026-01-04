@@ -81,7 +81,7 @@ async function doughnutchart() {
 }
 function getMarker(lat,long,title) {
 	const icon = L.icon({
-		iconUrl: "images/marker.png",
+		iconUrl: "assets/images/marker.png",
 		iconSize: [20, 30],
 		iconAnchor: [10, 30],
 		popupAnchor: [0, -30]
