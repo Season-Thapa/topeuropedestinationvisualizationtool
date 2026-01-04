@@ -32,24 +32,22 @@ async function handleFormSubmit(e) {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
-				// Success: Add coordinates
 				destinationData.Latitude = position.coords.latitude;
 				destinationData.Longitude = position.coords.longitude;
-				sendDataToServer(destinationData);
+				sendDataToServer(destinationData,true);
 			},
 			(error) => {
 				console.warn("Geolocation failed/denied:", error);
-				// Send anyway, just without coordinates
-				sendDataToServer(destinationData);
+				sendDataToServer(destinationData,false);
 			}
 		);
 	} else {
-		// Geolocation not supported
-		sendDataToServer(destinationData);
+
+		sendDataToServer(destinationData,false);
 	}
 }
 
-async function sendDataToServer(data) {
+async function sendDataToServer(data,hasLocation) {
 	try {
 		const response = await fetch(BASE_URL, {
 			method: 'POST',
@@ -60,7 +58,10 @@ async function sendDataToServer(data) {
 		});
 
 		if (response.ok) {
-			showMessage(`Success! "${data.Destination}" added to database.`, "success");
+			const statusMessage = hasLocation
+				? `Success! "${data.Destination}" added to database.`
+				: `Success! "${data.Destination}" added to database without location.`;
+			showMessage(statusMessage, "success");
 			form.reset();
 			setTimeout(() => {
 				window.location.href = 'index.html';
