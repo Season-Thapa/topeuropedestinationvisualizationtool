@@ -11,7 +11,7 @@ A web application to visualize European travel destinations using interactive ch
 
 ### 1. Clone the Repository
 ```bash
-git clone git@gitlab.ti.howest.be:ti/2025-2026/s3/web-technology/students/season-thapa/europeantourdestinationsvisualization.git
+git clone <repository-url>
 cd europeantourdestinationsvisualization
 
 2. Configure Environment
@@ -19,14 +19,16 @@ cd europeantourdestinationsvisualization
 Create a file named .env in the root folder and paste the following configuration:
 code Ini
   
-DB_ROOT_PASSWORD=your_root_password
+DB_ROOT_PASSWORD=your_own_root_password
 DB_HOST=127.0.0.1
-DB_USER=user
-DB_PASSWORD=1234
+DB_USER=your_own_username
+DB_PASSWORD=your_own_password
 DB_DATABASE=destinationdb
 DB_PORT=3306
 APP_PORT=3000
 PORT=3000
+
+Replace the example credentials with your own values.
 
 3. Start the Application
 
